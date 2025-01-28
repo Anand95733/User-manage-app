@@ -32,7 +32,7 @@ const UserList = () => {
       setUsers(processedUsers);
       setLoading(false);
     } catch (err) {
-      setError("Failed to fetch Emplyees");
+      setError("Failed to fetch Employees");
       setLoading(false);
     }
   };
@@ -94,25 +94,30 @@ const UserList = () => {
         )}
 
         {/* Button Container */}
-        <div className="flex justify-center items-center space-x-4 flex-wrap mt-4">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
-          >
-            Previous
-          </button>
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 flex-wrap mt-4">
+          <div className="flex space-x-4">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
+            >
+              Previous
+            </button>
+            <button
+              disabled={page * USERS_PER_PAGE >= users.length}
+              onClick={() => setPage(page + 1)}
+              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
+
+          {/* Add Employee Button */}
           <button
             onClick={handleAdd}
             className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200"
           >
             Add Employee
-          </button>
-          <button
-            disabled={page * USERS_PER_PAGE >= users.length}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
-          >
-            Next
           </button>
         </div>
       </div>
