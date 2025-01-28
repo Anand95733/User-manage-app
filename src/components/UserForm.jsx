@@ -67,11 +67,11 @@ const UserForm = ({ mode, user, setUsers, setIsModalOpen }) => {
       setUsers((prevUsers) =>
         prevUsers.map((u) => (u.id === user.id ? { ...u, ...formData } : u))
       );
-      toast.success("User updated successfully!");
+      toast.success("Employee updated successfully!");
     } else if (mode === "add") {
       const newUser = { ...formData, id: nextId };
       setUsers((prevUsers) => [...prevUsers, newUser]);
-      toast.success("User added successfully!");
+      toast.success("Employee added successfully!");
     }
 
     setIsModalOpen(false);
@@ -89,7 +89,7 @@ const UserForm = ({ mode, user, setUsers, setIsModalOpen }) => {
         </button>
 
         <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">
-          {mode === "add" ? "Add User" : "Edit User"}
+          {mode === "add" ? "Add Employee" : "Edit Employee"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
