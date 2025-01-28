@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FaLinkedin, FaGithub, FaCode } from "react-icons/fa"; // Social icons
-import { IoIosClose } from "react-icons/io"; // Close icon for popup
+import { FaLinkedin, FaGithub, FaCode } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 
 const Navbar = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -10,12 +10,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white p-4 shadow-md">
+    <nav className="bg-gray-100 text-blue-700 p-4 shadow-md">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <a href="/" className="font-bold text-lg">User Dashboard</a>
+        {/* Ajackus Company Logo */}
+        <a href="/" className="flex items-center">
+          <img
+            src="https://www.ajackus.com/images/logo-icon-blue.svg"
+            alt="Ajackus Logo"
+            className="h-10 object-contain"
+          />
+        </a>
+
         <button
           onClick={handlePopupToggle}
-          className="text-lg font-semibold hover:bg-blue-700 rounded px-4 py-2"
+          className="text-lg font-semibold hover:bg-blue-200 rounded px-4 py-2 transition"
         >
           About Me
         </button>
@@ -30,7 +38,7 @@ const Navbar = () => {
           >
             <IoIosClose size={24} />
           </button>
-          <h2 className="text-xl font-bold mb-4 text-center">Connect with Me</h2>
+          <h2 className="text-xl font-bold mb-4 text-center text-blue-700">Connect with Me</h2>
           <div className="flex justify-center space-x-6">
             <a
               href="https://www.linkedin.com/in/anand-goud-8a6009293/"

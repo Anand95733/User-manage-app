@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import User from "./User";
 import { Toaster, toast } from "react-hot-toast";
-import { FaPlus } from "react-icons/fa";
 import UserForm from "./UserForm";
-const API_URL = "https://jsonplaceholder.typicode.com/users";
 import { RotatingTriangles } from "react-loader-spinner";
+
+const API_URL = "https://jsonplaceholder.typicode.com/users";
+
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,12 +21,12 @@ const UserList = () => {
     try {
       const response = await axios.get(API_URL);
       const processedUsers = response.data.map((user) => {
-        const [firstName, ...lastNameParts] = user.name.split(" "); // Split the name
+        const [firstName, ...lastNameParts] = user.name.split(" ");
         return {
           ...user,
           firstName,
-          lastName: lastNameParts.join(" ") || "N/A", // Handle cases with only one name
-          department: user.department || "General" // Mock department
+          lastName: lastNameParts.join(" ") || "N/A",
+          department: user.department || "General",
         };
       });
       setUsers(processedUsers);
@@ -61,58 +62,63 @@ const UserList = () => {
   const paginatedUsers = users.slice(startIndex, startIndex + USERS_PER_PAGE);
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        User Management Dashboard
-      </h1>
-      {loading ? (
-        <div className="flex items-center justify-center v-screen">
-          <RotatingTriangles
-            visible={true}
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="rotating-triangles-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
-        </div>
-      ) : error ? (
-        <p className="text-center text-red-600">{error}</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {paginatedUsers.map((user) => (
-            <User
-              key={user.id}
-              user={user}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
+    <div className="bg-gray-100 min-h-screen">
+      <div className="max-w-6xl mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-700 shadow-md p-4 rounded bg-gray-50">
+          Employees Management
+        </h1>
+        {loading ? (
+          <div className="flex items-center justify-center v-screen mt-40">
+            <RotatingTriangles
+              visible={true}
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="rotating-triangles-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
             />
-          ))}
-        </div>
-      )}
-      <div className="mt-6 flex justify-center">
+          </div>
+        ) : error ? (
+          <p className="text-center text-red-600">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {paginatedUsers.map((user) => (
+              <User
+                key={user.id}
+                user={user}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Fixed Pagination and Add User Buttons */}
+      <div className="fixed bottom-0 left-0 w-full bg-gray-200 shadow-lg py-3 flex justify-center items-center space-x-4">
         <button
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
-          className="bg-gray-300 px-6 py-2 mx-2 disabled:bg-gray-200 rounded hover:bg-gray-400 transition duration-200"
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
         >
           Previous
         </button>
         <button
+          onClick={handleAdd}
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200"
+        >
+          Add Employee
+        </button>
+        <button
           disabled={page * USERS_PER_PAGE >= users.length}
           onClick={() => setPage(page + 1)}
-          className="bg-gray-300 px-6 py-2 mx-2 disabled:bg-gray-200 rounded hover:bg-gray-400 transition duration-200"
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200 disabled:bg-gray-300"
         >
           Next
         </button>
       </div>
-      <button
-        onClick={handleAdd}
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-200"
-      >
-        <FaPlus size={20} />
-      </button>
+
       {isModalOpen && (
         <UserForm
           mode={mode}
